@@ -56,7 +56,7 @@ def process_query():
         raw_query_embedding = get_huggingface_embeddings(query)
 
         top_matches = pinecone_index.query(vector=raw_query_embedding.tolist(
-        ), top_k=6, include_metadata=True, namespace=NAMESPACE)
+        ), top_k=10, include_metadata=True, namespace=NAMESPACE)
 
         # Get the list of retrieved texts
         contexts = [item['metadata']['text']
@@ -81,13 +81,14 @@ def process_query():
             ]
         )
 
-        return llm_response.choices[0].message.content
+        return llm_response.choices[0].message.content, top_matches
 
     try:
-        rag_response = perform_rag(query)
+        rag_response, top_matches = perform_rag(query)
 
         json_msg = {
             "response": rag_response,
+            "stocks": top_matches,
             "message": "RAG Response Successful",
             "status": 200
         }
