@@ -69,7 +69,7 @@ def process_query():
         system_prompt = f"""You are a financial analyst with a broad scope of knowledge regarding the stock market. You are currently responsible for a new team of traders who will be handling a lot of money for the company and your clients. These new traders have a lot of questions about the stock market, the stocks, and overall financial analysis. They need your help in order to answer these questions and learn so that they have the the best set of tools and knowledge in order to maximize their returns. 
         
         When they are asking their questions, some high level context will be provided including stocks that are relevant to their question. Using this context, you should provide a response that is both accurate and helpful to the question asked. You want to be clear and direct in your response. Please ensure that you are not explicitly mentioning the contents of the context you are being given, but rather use it to formulate your response. The actual stocks should be acknowledged in your response and included in the response. 
-        
+               
         If given the context, and the question, you feel that there are stocks that are not mentioned that should be acknowledged in the response, please include them. If there are no stocks outside of the context that seem relevant, stick to the ones from the context provided.
         """
 
@@ -102,6 +102,11 @@ def process_query():
             "status": 500
         }
         return Response(json.dumps(json_msg), status=500, mimetype='application/json')
+
+
+@app.route('/stock-news', methods=["GET"])
+def get_stock_news():
+    pass
 
 
 if __name__ == '__main__':
