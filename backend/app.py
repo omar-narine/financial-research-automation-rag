@@ -3,9 +3,6 @@ from langchain.embeddings import OpenAIEmbeddings
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from pinecone import Pinecone
 import os
-import tempfile
-from github import Github, Repository
-from git import Repo
 from openai import OpenAI
 from pathlib import Path
 from langchain.schema import Document
@@ -16,7 +13,7 @@ import pickle
 import numpy as np
 from flask import Flask, request, Response
 import json
-
+from script.get_news import get_news
 NAMESPACE = 'stocks'
 
 app = Flask(__name__)
@@ -106,7 +103,13 @@ def process_query():
 
 @app.route('/stock-news', methods=["GET"])
 def get_stock_news():
-    pass
+    data = request.get_json()
+    ticker = data.get('ticker')
+    stock_name = data.get('stock_name')
+
+    news = get_news(ticker, stock_name)
+
+    return Response(json.dumps(news), status=200, mimetype='application/json')
 
 
 if __name__ == '__main__':
