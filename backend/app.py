@@ -14,6 +14,7 @@ import numpy as np
 from flask import Flask, request, Response
 import json
 from script.get_news import get_news
+from script.fear_and_greed import get_fgi
 NAMESPACE = 'stocks'
 
 app = Flask(__name__)
@@ -110,6 +111,25 @@ def get_stock_news():
     news = get_news(ticker, stock_name)
 
     return Response(json.dumps(news), status=200, mimetype='application/json')
+
+
+@app.route('/current-fear-and-greed', methods=["GET"])
+def get_fear_and_greed():
+
+    try:
+        fg_index = json.loads(get_fgi())
+
+        current_fg_index = (fg_index.get('fgi').get('now'))
+
+        return Response(json.dumps(current_fg_index), status=200, mimetype='application/json')
+
+    except Exception as e:
+        json_msg = {
+            "response": f"An error occurred: {e}",
+            "message": "Internal Server Error - FGI Response Failed",
+            "status": 500
+        }
+        return Response(json.dumps(json_msg), status=500, mimetype='application/json')
 
 
 if __name__ == '__main__':

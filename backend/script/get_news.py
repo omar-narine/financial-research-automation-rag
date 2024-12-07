@@ -32,6 +32,3 @@ def get_news(ticker: str, stock_name: str):
     data = res.read()
 
     print(data.decode('utf-8'))
-
-
-get_news('AAPL', 'Apple')
