@@ -41,7 +41,7 @@ def on_query_change():
                                 for match in top_matches]
 
     # st.markdown(rag_response)
-    st.write(st.session_state.tickers)
+    # st.write(st.session_state.tickers)
     # st.write(len(top_matches))
 
 
@@ -103,11 +103,47 @@ with st.container():
 
 with st.container():
     st.write(st.session_state.rag_response)
+    st.markdown("\n")
 
 if st.session_state.tickers:
     stock_info_tabs = st.tabs(st.session_state.tickers)
 
-    for tab in stock_info_tabs:
+    for i, tab in enumerate(stock_info_tabs):
         with tab:
-            st.write(st.session_state.top_matches)
-            # st.write(st.session_state.top_matches[str(tab)])
+            # Find matching stock data for this tab
+            current_ticker = st.session_state.tickers[i]
+            stock_data = st.session_state['top_matches'][i]
+
+            if stock_data:
+                # Display stock information
+                st.subheader(f"Stock Information for {current_ticker}")
+
+                col1, col2 = st.columns(2)
+
+                with col1:
+                    st.markdown("""
+                    #### Company Information
+                    - **Sector:** {}
+                    - **Industry:** {}
+                    """.format(
+                        stock_data.get('Sector', 'N/A'),
+                        stock_data.get('Industry', 'N/A')
+                    ))
+
+                with col2:
+                    st.markdown("""
+                    #### Location
+                    - **Country:** {}
+                    - **State:** {}
+                    - **City:** {}
+                    """.format(
+                        stock_data.get('Country', 'N/A'),
+                        stock_data.get('State', 'N/A'),
+                        stock_data.get('City', 'N/A')
+                    ))
+
+                st.markdown("### Business Summary")
+                st.write(stock_data.get('Business Summary',
+                         'No description available'))
+            else:
+                st.error(f"No detailed information found for {current_ticker}")
