@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv(dotenv_path='../.env')
 
-# Rewrite this function with some other packages that I am more familiar with
+# THis function and associated endpoint need to be rewritten to properly process the response
 
 
 def get_news(ticker: str, stock_name: str):

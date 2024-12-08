@@ -1,14 +1,24 @@
 import http.client
-import json
 from dotenv import load_dotenv
 import os
 
 load_dotenv(dotenv_path='../.env')
 
-# FUNCTION NEEDS TO PROVIDE PROPER RESPONSE BACK TO THE API CALL
-
 
 def get_fgi():
+    """
+    Fetches data on the Fear and Greed Index from the RapidAPI endpoint.
+
+    This function connects to the Fear and Greed Index API hosted on RapidAPI, 
+    retrieves the data, and returns the raw response in JSON format.
+
+    Returns:
+        bytes: The raw JSON response from the API 
+
+    Notes:
+        - Requires the RapidAPI key to be set as an environment variable (`RAPID_API_KEY`).
+        - Ensure the `.env` file in the parent directory contains the API key.
+    """
 
     conn = http.client.HTTPSConnection("fear-and-greed-index.p.rapidapi.com")
 
