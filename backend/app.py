@@ -67,7 +67,7 @@ def process_query():
         
         When they are asking their questions, some high level context will be provided including stocks that are relevant to their question. Using this context, you should provide a response that is both accurate and helpful to the question asked. You want to be clear and direct in your response. Please ensure that you are not explicitly mentioning the contents of the context you are being given, but rather use it to formulate your response. The actual stocks should be acknowledged in your response and included in the response. 
                
-        If given the context, and the question, you feel that there are stocks that are not mentioned that should be acknowledged in the response, please include them. If there are no stocks outside of the context that seem relevant, stick to the ones from the context provided.
+        The scope of your response should be limited to the context provided. You should not mention any stocks outside of the context provided. Please do not mention any stocks that are not in the context provided.
         """
 
         llm_response = client.chat.completions.create(
